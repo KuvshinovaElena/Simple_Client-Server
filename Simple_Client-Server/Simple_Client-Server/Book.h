@@ -8,7 +8,7 @@ private:
 	unsigned quantity;
 public:
 
-	Book(char * t, char* a, int q = 0)
+	Book(char * t, char* a, unsigned q = 0)
 	{
 		setTitle(t);
 		setAuthor(a);
