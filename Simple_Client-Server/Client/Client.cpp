@@ -1,6 +1,6 @@
 #include "Client.h"
 #include <iostream>
-
+#define BUFFSIZE 300
 Client::Client(const WORD wVersionRequest, const int port)
 {
 	WSAData wsa;		//ќбъ€вл€ем экземпл€р структуры, содержащей информацию о реализации Windows Sokets
@@ -40,9 +40,16 @@ Client::Client(const WORD wVersionRequest, const int port)
 	}
 	else
 		std::cout << "Successful connected with server"  << std::endl;
-	char * data = new char[20];
-	
-	while (std::cin.getline(data, 20))
+	recv(clntSock, clntBuf, 20, 0);
+	std::cout << clntBuf << std::endl;
+
+	char * data = new char[BUFFSIZE];
+	if (recv(clntSock, clntBuf, BUFFSIZE, 0))
+	{
+		std::cout << clntBuf << std::endl;
+	}
+
+	while (std::cout<<"Me: " && std::cin.getline(data, 20))
 	{
 		if (!strcmp(data, "exit")) clntSock = -1;
 		if (res = send(clntSock, data, 20, 0) <= 0 ) break;

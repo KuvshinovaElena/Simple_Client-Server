@@ -5,6 +5,7 @@
 
 class Client
 {
+	char clntBuf[20];
 public:
 	Client(const WORD wVersionRequest, const int port);
 
