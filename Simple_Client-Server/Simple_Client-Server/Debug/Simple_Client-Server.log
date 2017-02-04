@@ -1,4 +1,3 @@
 ﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Simple_Client-Server.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   Server.cpp
-  Simple_Client-Server.vcxproj -> C:\Users\mvideo\Documents\Visual Studio 2015\Projects\Simple_Client-Server\Simple_Client-Server\Debug\Server.exe
-  Simple_Client-Server.vcxproj -> C:\Users\mvideo\Documents\Visual Studio 2015\Projects\Simple_Client-Server\Simple_Client-Server\Debug\Server.pdb (Partial PDB)
+c:\users\mvideo\documents\visual studio 2015\projects\simple_client-server\simple_client-server\simple_client-server\server.cpp : fatal error C1041: невозможно открыть базу данных программы C:\Users\mvideo\Documents\Visual Studio 2015\Projects\Simple_Client-Server\Simple_Client-Server\Simple_Client-Server\Debug\vc140.pdb; если несколько файлов CL.EXE осуществляют запись в один и тот же PDB-файл, воспользуйтесь /FS

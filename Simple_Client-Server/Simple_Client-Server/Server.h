@@ -6,10 +6,10 @@
 
 class Server
 {
-	std::map<int, SOCKET>* clients;	//Клиенты
+	std::map<USHORT, SOCKET> clients;	//Клиенты
 public:
 	Server(const WORD wVersionRequest, const int port);
-	static int updateClient(char * buff, USHORT port);
+	//int updateClient(char * buff, USHORT port);
 	class ExceptionInvalidSocketServer : std::exception {};
 	class ExceptionWSAStartup : std::exception {};
 	class ExceptionServerBind : std::exception {};

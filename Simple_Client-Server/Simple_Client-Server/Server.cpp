@@ -7,17 +7,18 @@ struct argList
 {
 	SOCKET client;
 	sockaddr_in clntInfo;
-	int (Server::*updateFunc) (char * buff, USHORT port);
-	argList(SOCKET sock, sockaddr_in inf, int (Server::*func) (char * buff, USHORT port))
+	std::map<USHORT, SOCKET>* clnts;
+	argList(SOCKET sock, sockaddr_in inf, std::map<USHORT, SOCKET> mapclnt)
 	{
 		client = sock;
 		clntInfo = inf;
-		updateFunc = func;
+		clnts = &mapclnt;
 	}
 
 };
 
-void serviceClient(void * client_socket);
+void serviceClient(void * arg);
+
 Server::Server(const WORD wVersionRequest, const int port)
 {
 	WSAData wsa;		//Объявляем экземпляр структуры, содержащей информацию о реализации Windows Sokets
@@ -81,10 +82,10 @@ Server::Server(const WORD wVersionRequest, const int port)
 		int size = sizeof(clntInfo);
 		//Принимаем соединение с клиентом
 		while (clntSock = accept(srvsock, (sockaddr *)&clntInfo, &size)) {
-
+			clients.insert(std::pair<USHORT, SOCKET>(clntInfo.sin_port, clntSock));
 			std::cout << "Connect new client made successfully:" << ntohs(clntInfo.sin_port) << std::endl;
-			clients->insert(std::pair<int, SOCKET>(ntohs(clntInfo.sin_port), clntSock));
-			argList *arg = new argList(clntSock,clntInfo,updateClient); 
+			//clients->insert(std::pair<int, SOCKET>(ntohs(clntInfo.sin_port), clntSock));
+			argList *arg = new argList(clntSock,clntInfo,clients); 
 
 			_beginthread(serviceClient, 0, (void *)arg);
 
@@ -94,21 +95,23 @@ Server::Server(const WORD wVersionRequest, const int port)
 void serviceClient(void * arg)
 {
 	argList & argClnt = *reinterpret_cast<argList*>(arg);
-	SOCKET & clnt = (reinterpret_cast<argList*>(arg))->client;
 	int res = 0;
-	char srvBuf[20];
+	char srvBuf[BUFFSIZE];
 	send(argClnt.client, "Hi, client!", BUFFSIZE, 0);
 	while (res = recv(argClnt.client, srvBuf, BUFFSIZE, 0))
 	{
 		if (res <= 0)
 		{
 			std::cout << "Client removed" << std::endl;
-			closesocket(clnt);
+			closesocket(argClnt.client);
 			break;
 		}
-		int (Server::*func)(char *, USHORT);
-		func = argClnt.updateFunc;
-		//func(srvBuf, argClnt.clntInfo.sin_port);
+		for (std::map<USHORT, SOCKET>::const_iterator p = argClnt.clnts->begin(); (p != argClnt.clnts->end()) && (p->first != argClnt.clntInfo.sin_port); ++p)
+		{
+			//send(p->second, (char*)ntohs(argClnt.clntInfo.sin_port), 10, 0);
+			send(p->second, "HI", 10, 0);
+			//send(p->second, srvBuf, BUFFSIZE, 0);
+		}
 		std::cout << "Client " << ntohs(argClnt.clntInfo.sin_port) << ":\t" << srvBuf << std::endl;
 	}
 	_endthread();
@@ -120,11 +123,12 @@ int main()
 	return 0;
 }
 
-int Server::updateClient(char * buff, USHORT port)
-{
-	for (std::map<int, SOCKET>::const_iterator p = clients->begin(); (p != clients->end()) && (p->first != port); ++p)
-	{
-		send(p->second, (char*)port, 10, 0);
-		send(p->second, buff, BUFFSIZE, 0);
-	}
-}
+//int Server::updateClient(char * buff, USHORT port)
+//{
+//	for (std::map<int, SOCKET>::const_iterator p = clients->begin(); (p != clients->end()) && (p->first != port); ++p)
+//	{
+//		send(p->second, (char*)port, 10, 0);
+//		send(p->second, buff, BUFFSIZE, 0);
+//	}
+//	return 0;
+//}
