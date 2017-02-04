@@ -1,8 +1,8 @@
 ﻿  Client.cpp
   Создание кода
-  1 of 30 functions ( 3.3%) were compiled, the rest were copied from previous compilation.
+  2 of 29 functions ( 6.9%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    1 functions had inline decision re-evaluated but remain unchanged
+    3 functions had inline decision re-evaluated but remain unchanged
   Создание кода завершено
-  Client.vcxproj -> C:\Users\mvideo\Documents\Visual Studio 2015\Projects\Simple_Client-Server\Simple_Client-Server\Release\Client.exe
-  Client.vcxproj -> C:\Users\mvideo\Documents\Visual Studio 2015\Projects\Simple_Client-Server\Simple_Client-Server\Release\Client.pdb (Full PDB)
+  Client.vcxproj -> C:\Users\Елена\Source\Repos\Simple_Client-Server\Simple_Client-Server\Release\Client.exe
+  Client.vcxproj -> C:\Users\Елена\Source\Repos\Simple_Client-Server\Simple_Client-Server\Release\Client.pdb (Full PDB)

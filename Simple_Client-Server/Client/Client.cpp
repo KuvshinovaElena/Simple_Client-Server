@@ -4,6 +4,7 @@
 
 #define BUFFSIZE 300
 void serviceServer(void * sock);
+void sendMessages(void * sock);
 Client::Client(const WORD wVersionRequest, const int port)
 {
 	WSAData wsa;		//ќбъ€вл€ем экземпл€р структуры, содержащей информацию о реализации Windows Sokets
@@ -45,34 +46,15 @@ Client::Client(const WORD wVersionRequest, const int port)
 		std::cout << "Successful connected with server"  << std::endl;
 	recv(clntSock, clntBuf, BUFFSIZE, 0);
 	std::cout << clntBuf << std::endl;
-	_beginthread(serviceServer, 0, &clntSock);
 	char * data = new char[BUFFSIZE];
-	while (std::cout<<"Me: " && std::cin.getline(data, 20))
+	while (std::cout << "Me: " && std::cin.getline(data, 20))
 	{
-		//res = recv(clntSock, clntBuf, BUFFSIZE, 0);
 		if (!strcmp(data, "exit")) clntSock = -1;
-		if (res = send(clntSock, data, 20, 0) <= 0 ) break;
+		if (res = send(clntSock, data, 20, 0) <= 0) break;
 
 	}
 	if (clntSock != -1) closesocket(clntSock);
 	WSACleanup();
-}
-
-void serviceServer(void * sock) {
-	int res;
-	char srvBuf[BUFFSIZE];
-	while (res = recv(*reinterpret_cast<SOCKET*>(sock), srvBuf, BUFFSIZE, 0))
-	{
-		if (res < 0)
-		{
-			std::cout << "Server failure" << std::endl;
-			closesocket(*reinterpret_cast<SOCKET*>(sock));
-			break;
-		}
-		//std::cout << "Client " << ntohs(argClnt.clntInfo.sin_port) << ":\t" << srvBuf << std::endl;
-		std::cout << "Client " << ":\t" << srvBuf << std::endl;
-	}
-	_endthread();
 }
 
 int main()
