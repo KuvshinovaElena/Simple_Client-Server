@@ -6,7 +6,6 @@
 
 class Server
 {
-	std::map<USHORT, SOCKET> clients;	//Клиенты
 public:
 	Server(const WORD wVersionRequest, const int port);
 	//int updateClient(char * buff, USHORT port);
