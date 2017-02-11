@@ -8,7 +8,6 @@ class Server
 {
 public:
 	Server(const WORD wVersionRequest, const int port);
-	//int updateClient(char * buff, USHORT port);
 	class ExceptionInvalidSocketServer : std::exception {};
 	class ExceptionWSAStartup : std::exception {};
 	class ExceptionServerBind : std::exception {};
